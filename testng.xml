@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite" verbose="1">
+	<listeners>
+		<listener class-name="listener.TestngListener"></listener>
+	</listeners>
+	<test name="API">
+		<packages>
+			<package name="test.api" />
+		</packages>
+	</test>
+	<test name="UI">
+		<packages>
+			<package name="test.ui" />
+		</packages>
+	</test>
+</suite>
