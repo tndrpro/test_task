@@ -1,0 +1,41 @@
+Запрос:
+SELECT
+    user, site, area, design, MAX(CPM)
+FROM
+    (SELECT
+        user.user_id AS user,
+            site.site_id AS site,
+            site_area.site_area_id AS area,
+            site_area_design_1_id AS design,
+            SUM(1000 * stat_design_cache.partner_gain / stat_design_cache.view_count) AS CPM
+    FROM
+        user
+    INNER JOIN site ON user.user_id = site.user_id
+    INNER JOIN site_area ON site.site_id = site_area.parent_id
+    INNER JOIN site_area_design_1 ON site_area.site_area_id = site_area_design_1.site_area_id
+    LEFT JOIN stat_design_cache ON site_area_design_1.site_area_design_1_id = stat_design_cache.design_id
+    GROUP BY user.user_id , site.site_id , site_area.site_area_id , site_area_design_1_id) AS t
+GROUP BY user , site , area
+
+
+Результат:
+user,site,area,design,MAX(CPM)
+402,334,534732,393898,10.698711356553
+9331,9536,562669,403869,74.995136359353
+46987,156307,526396,390674,258.577654882582
+64266,155425,526366,390654,0.000000000000
+66984,162574,541087,395991,632.511574939257
+66984,180779,557822,400913,390.418153424002
+71378,142778,382965,373138,NULL
+71618,142901,383508,373498,0.000000000000
+71618,142901,384030,375064,0.532145599071
+71618,142901,393976,383148,NULL
+71618,142901,396272,384878,2.010818210546
+72042,143087,383589,379101,14.615384615385
+72042,143087,383590,373356,1.206606554535
+72042,143087,383592,373358,1.793103448276
+72042,143087,387289,382574,0.000000000000
+79881,150271,515978,386527,11.429180034228
+79881,151424,516033,386572,32.867017931315
+82021,152110,517358,387466,8.572049617599
+103558,191359,566509,405874,109.407662459228
